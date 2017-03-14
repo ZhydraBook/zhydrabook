@@ -1,0 +1,6 @@
+[submodule "ZeroNet"]
+	path = ZeroNet
+	url = git@github.com:HelloZeroNet/ZeroNet.git
+[submodule "ZeroBundle"]
+	path = ZeroBundle
+	url = git@github.com:HelloZeroNet/ZeroBundle.git
