@@ -5,7 +5,9 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 import baseConfig from './webpack.config.base';
+import DecompressWebpackPlugin from './decompress-webpack-plugin';
 
 export default merge(baseConfig, {
   devtool: 'source-map',
@@ -15,7 +17,7 @@ export default merge(baseConfig, {
   // 'main.js' in root
   output: {
     path: __dirname,
-    filename: './app/main.js'
+    filename: './build/main.js'
   },
 
   plugins: [
@@ -37,7 +39,18 @@ export default merge(baseConfig, {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    })
+    }),
+    new CleanWebpackPlugin(['build']),
+    new DecompressWebpackPlugin([{
+      from: 'ZeroBundle/dist/ZeroBundle-win.zip',
+      to: 'build/win'
+    }, {
+      from: 'ZeroBundle/dist/ZeroBundle-mac-osx.zip',
+      to: 'build/mac'
+    }, {
+      from: 'ZeroBundle/dist/ZeroBundle-linux64.tar.gz',
+      to: 'build/linux'
+    }], {debug: 'debug'})
   ],
 
   /**

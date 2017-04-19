@@ -9,15 +9,17 @@ import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
 import baseConfig from './webpack.config.base';
+import options from './package.json';
+
+const zerodata = path.join(__dirname, 'ZeroNet', 'data', options.zerosite);
 
 export default merge(baseConfig, {
   devtool: 'cheap-module-source-map',
 
-  entry: ['babel-polyfill', './app/index'],
+  entry: ['./app/index'],
 
   output: {
-    path: path.join(__dirname, 'app/dist'),
-    publicPath: '../dist/'
+    path: zerodata,
   },
 
   module: {
@@ -30,10 +32,16 @@ export default merge(baseConfig, {
           fallback: 'style-loader',
         })
       },
-
+      {
+        test: /semantic\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: 'css-loader',
+          fallback: 'style-loader',
+        })
+      },
       // Pipe other styles through css modules and append to style.css
       {
-        test: /^((?!\.global).)*\.css$/,
+        test: /^((?!(\.global|semantic)).)*\.css$/,
         use: ExtractTextPlugin.extract({
           use: {
             loader: 'css-loader',
@@ -107,7 +115,9 @@ export default merge(baseConfig, {
      * development checks
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      global: {}, // bizarre lodash(?) webpack workaround
+      'global.GENTLY': false // superagent client fix
     }),
 
     /**
@@ -121,8 +131,8 @@ export default merge(baseConfig, {
      * Dynamically generate index.html page
      */
     new HtmlWebpackPlugin({
-      filename: '../app.html',
-      template: 'app/app.html',
+      filename: 'app.html',
+      template: 'app/index.html',
       inject: false
     })
   ],

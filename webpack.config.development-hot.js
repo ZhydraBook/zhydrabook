@@ -6,55 +6,54 @@
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import { spawn } from 'child_process';
 import baseConfig from './webpack.config.base';
-import options from './package'
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import BabiliPlugin from 'babili-webpack-plugin';
 
-const port = process.env.PORT || 8080;
-const publicPath = `http://127.0.0.1:${port}/dist`;
-
-const zerodata = path.join(__dirname, "ZeroNet", "data", options.zerosite)
+const port = process.env.PORT || 3000;
+const publicPath = `http://localhost:${port}/`;
 
 export default merge(baseConfig, {
   devtool: 'inline-source-map',
 
   entry: [
     'react-hot-loader/patch',
-    'babel-polyfill',
-    './app/index',
+    `webpack-dev-server/client?http://localhost:${port}/`,
+    'webpack/hot/only-dev-server',
+    path.join(__dirname, 'app/index.js'),
   ],
 
   output: {
-    path: zerodata,
-    // publicPath: `http://127.0.0.1:${port}/dist/`
+    publicPath: `http://localhost:${port}/`
   },
 
   module: {
-    // Extract all .global.css to style.css as is
     rules: [
       {
         test: /\.global\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: 'css-loader',
-          fallback: 'style-loader',
-        })
-      },
-
-      // Pipe other styles through css modules and append to style.css
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: {
+        use: [
+          { loader: 'style-loader' },
+          {
             loader: 'css-loader',
             options: {
-              modules: true,
+              sourceMap: true,
+            },
+          }
+        ]
+      },
+      {
+        test: /^((?!\.global).)*\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              //modules: true,
+              sourceMap: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
             }
-          }
-        }),
+          },
+        ]
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -120,23 +119,21 @@ export default merge(baseConfig, {
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
      */
-    new BabiliPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
-    new ExtractTextPlugin('style.css'),
     // turn debug mode on.
     new webpack.LoaderOptionsPlugin({
       debug: true
     }),
-    new HtmlWebpackPlugin({
-      filename: 'app.html',
-      template: 'app/app.html',
-      inject: false
-    })
   ],
 
-  /**
-   * https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-   */
+  devServer: {
+    port,
+    hot: true,
+    inline: true,
+    historyApiFallback: true,
+    contentBase: path.join(__dirname, 'app'),
+    publicPath,
+  },
 });

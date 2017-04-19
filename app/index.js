@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { hashHistory } from 'react-router';
 import { AppContainer } from 'react-hot-loader';
 import { syncHistoryWithStore } from 'react-router-redux';
+import 'semantic-ui-css/semantic.css';
+
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 import './app.global.css';
