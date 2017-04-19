@@ -1,7 +1,7 @@
 # Installazione
 
 ```
-git clone recursive --depth=1
+git clone --recursive --depth=1 git@github.com:ZhydraBook/zhydrabook.git
 npm install
 ```
 
