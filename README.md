@@ -76,6 +76,3 @@ Windows
 
 Please use [Docker](https://www.docker.com/).
 
-Pattern: 1Book
-Address: 1BookRzXLzwicU4M9abMUh2tSioT86WL6b
-Privkey: 5JET3vfJhYrhayBcXCAWrDHsAh3Zwy5eSEyD4Y8VHLES231ny7b
