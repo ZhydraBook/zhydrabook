@@ -1,6 +1,6 @@
 {
-  "name": "zerobook",
-  "productName": "ZeroBook",
+  "name": "zhydrabook",
+  "productName": "ZhydraBook",
   "version": "0.0.1",
   "description": "App to share book on zeronet",
   "main": "./main.js",
