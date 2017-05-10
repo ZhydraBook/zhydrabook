@@ -198,7 +198,8 @@
     "semantic-ui-react": "^0.67.1",
     "source-map-support": "^0.4.10",
     "tree-kill": "^1.1.0",
-    "webtorrent": "^0.98.14"
+    "webtorrent": "^0.98.14",
+    "zeroframe": "^1.0.0"
   },
   "devEngines": {
     "node": ">=6.x",
