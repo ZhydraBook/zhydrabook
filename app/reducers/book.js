@@ -1,6 +1,10 @@
 
 import { VisibilityFilters, SET_VISIBILITY_FILTER, ADD_DOWNLOAD, QUERY_UPDATE, QUERY_RESET, UPDATE_DOWNLOAD } from '../actions';
-import sampleBooks from '../sample/libri';
+import ZeroAPI from '../utils/ZeroAPI';
+
+var zhydra = new ZeroAPI();
+var sampleBooks = zhydra.getBooks();
+
 
 const { SHOW_ALL } = VisibilityFilters;
 
