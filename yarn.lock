@@ -8751,10 +8751,6 @@ zero-fill@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/zero-fill/-/zero-fill-2.2.3.tgz#a3def06ba5e39ae644850bb4ca2ad4112b4855e9"
 
-zeroframe@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/zeroframe/-/zeroframe-1.0.0.tgz#4a7a36bea997bf3a21013f62e026b91950668b48"
-
 zip-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/zip-stream/-/zip-stream-1.1.1.tgz#5216b48bbb4d2651f64d5c6e6f09eb4a7399d557"
